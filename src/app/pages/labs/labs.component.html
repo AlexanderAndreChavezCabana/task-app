@@ -1,0 +1,117 @@
+<div class="container">
+    <hr/>
+    <h1>Color bloque</h1>
+    <svg>
+        <g>
+            <rect x='0' y='0' height="100" width='100' [attr.fill]="colorCtrl.value"></rect>
+        </g>
+    </svg>
+    <input type="number" [formControl]="widthCtrl"/>
+    <span class="box" [style.width.px]="widthCtrl.value"></span>
+    <hr/>
+    <h1>Color Control</h1>  
+    <p>Color: {{ colorCtrl.value }}</p>
+    <input type="color" [formControl]="colorCtrl">
+    <hr/>
+    <hr/>
+    <div style="border: 2px purple solid;">
+        <h1>Probando Switch</h1>
+            <input type="text" [value]="person().name" (change)="changeName($event)">
+            <div [ngSwitch]="person().name">
+                <p *ngSwitchCase="'Alex'">Yo soy Alex</p>
+                <p *ngSwitchCase="'Jean'">Yo soy Jean</p>
+                <p *ngSwitchCase="'Jorge'">Yo soy Jorge</p>
+                <p *ngSwitchCase="'Bert'">Yo soy Bert</p>
+                <p *ngSwitchDefault>No se registro datos</p>
+            </div>
+    </div>
+    <hr/>
+    <h1>Probando signals and if</h1>
+    <input type="text" [value]="person().name" (change)="changeHandlerName($event)">
+    <input type="number" [value]="person().age" (change)="changeHandlerAge($event)">
+    <p>Con changeAge update</p>
+    <input type="number" [value]="person().age" (change)="changeAge($event)">
+    <p>Nombre de la persona: {{ person().name }}</p>
+    <p>Edd de la persona: {{ person().age }}</p>
+    <hr>
+    <h2>Primer If</h2>
+    <div *ngIf="person().name === 'Andre'" style="border: 2px yellow solid;">
+        Mi nombre es {{ person().name }}
+    </div>
+    <div *ngIf="person().name === 'Andre' && person().age === 20; else miBLoque" style="border: 2px blue solid;">
+        Mi nombre es Andre y tengo {{ person().age }}
+    </div>
+
+
+    <ng-template #miBLoque>
+        <div style="border: 4px red solid;">
+            No se ha encontrado ningun o detectado algún cambio
+        </div>    
+    </ng-template>
+
+    
+    <button (click)="onSendAlert()">Alerta</button>
+    <hr>
+    <button (dblclick)="onSendDoubleAlert()">Alerta doble</button>
+    <hr>
+    <p>Change:</p>
+    <input type="number" [value]="person().age" (change)="changeHandler($event)">
+    <p>Change event in text:</p>
+    <input type="text" [value]="person().name" (change)="changeHandler($event)">
+    <p>Keydown:</p>
+    <input type="text" [value]="person().apellido" (keydown)="keydownHandler($event)">
+    <p>Keydown shift + t:</p>
+    <input type="text" [value]="person().name" (keydown.shift.t)="onSendAlert()">
+    <p>Signals:</p>
+    <input type="text" [value]="word()" (change)="changeHandler($event)">
+    <p>name: {{ word() }}</p>
+    <hr>
+    <p>Signal v2</p>
+    <input type="text" [value]="word()" (change)="changeHandler($event)">
+    <hr />
+    <p>Porbando</p>
+    
+    <div *ngIf="word() === 'Alexander'">
+        Palabra correcta {{ word() }}
+    </div>
+    <ul>
+        <p>Tamaño del array: {{ mockData().length }}</p>
+        <li *ngFor="let item of mockData(); index as i">
+            <p>{{ i }} {{ item.nombre }} {{ item.apellido }}, {{ item.age }} años(s)</p>
+        </li>
+    </ul>
+    <hr>
+    <h1>Este es mi primer proyecto</h1>
+    <h2>{{ welcome }}</h2>
+    <ul>
+        <li *ngFor="let item of tasks">
+        {{ item }}
+        </li>
+    </ul>
+    <ul>
+    <li *ngFor="let item of ['Alexander', 1, 2, 3.2, null]">
+        {{ item }}
+    </li>
+    </ul>
+    <h2>{{ 'Hola'.repeat(4) }}</h2>
+    <p>La suma es 3 + 3 es {{ 3 + 3 }}</p>
+    <p>Hola soy {{ name }} y mi edad es {{age }}</p>
+    <img src="" alt="">
+    <input type="text" value="Andre">
+    <input type="text" [value]="name">
+    <button disabled="false">Click me</button>
+    <button [disabled]="disabled">Como estas</button>
+    <img [src]="img" alt="">
+
+    <div style="border: 2px red solid;">
+        <p>{{ person().name }} / {{ person().apellido}} / {{ person().age }}</p>
+        <img [src]="person().avatar" alt="">
+    </div>
+
+    <ul>
+        <li *ngFor="let p of persons">
+            {{ p.name }} / {{ p.apellido}} / {{ p.age }}
+            <img [src]="p.avatar" alt="" class="avatar">
+        </li>
+    </ul>
+</div>

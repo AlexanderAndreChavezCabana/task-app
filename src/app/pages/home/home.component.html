@@ -1,0 +1,105 @@
+<section class="todoapp">
+    <header class="header">
+      <div class="container">
+        <h1>My Day</h1>
+        <p>All my tasks in one place</p>
+        <input
+          class="new-todo"
+          placeholder="Type new todo"
+          autofocus
+          type="text"
+          [formControl]="newTaskCtrl"
+          (keydown.enter)="changeChandler()"
+        />
+      </div>
+    </header>
+    <div class="container todoapp-wrapper">
+      <!-- This section should be hidden by default and shown when there are todos -->
+      <section class="main">
+        <ul class="todo-list">
+          <!--
+          <li class="editing">
+            <div class="view">
+              <input class="toggle" type="checkbox" checked />
+              <label>Learn JavaScript</label>
+              <button class="destroy"></button>
+            </div>
+            <input class="edit" value="Learn JavaScript" />
+          </li>
+          -->
+          <!--
+          <pre>
+            <code>
+              {{ tasks() | json }}
+            </code>
+          </pre>
+          -->
+          <!-- <li (dblclick)="updateTaskEditingMode(i)" *ngFor="let task of tasks(); index as i" [class.editing]="task.editing" [class.completed]="task.completed" > -->
+          <li (dblclick)="updateTaskEditingMode(i)" *ngFor="let task of tasksByFilter(); index as i" [class.editing]="task.editing" [class.completed]="task.completed" >
+            <div class="view">
+              <input class="toggle" type="checkbox" [checked]="task.completed" (change)="updateTask(i)"/>
+              <label>{{ task.title }}</label>
+              <button class="destroy" (click)="DeleteTask(i)"></button>
+            </div>
+            <input class="edit" [value]="task.title" (keydown.enter)="updateTaskTitle(i, $event)" (keydown.esc)="escapeTask(i, $event)" />
+          </li>
+          <!--
+          <li>
+            <div class="view">
+              <input class="toggle" type="checkbox" />
+              <label>Buy a unicorn</label>
+              <button class="destroy"></button>
+            </div>
+            <input class="edit" value="Buy a unicorn" />
+          </li>
+          -->
+          <!--
+          <li class="editing">
+            <div class="view">
+              <input class="toggle" type="checkbox" />
+              <label>Make dishes</label>
+              <button class="destroy"></button>
+            </div>
+            <input class="edit" value="Make dishes" />
+          </li> 
+          -->
+        </ul>
+      </section>
+      <!-- This footer should be hidden by default and shown when there are todos -->
+      <footer class="footer">
+        <!-- This should be `0 items left` by default -->
+        <!-- <span class="todo-count"><strong>{{ tasks().length }}</strong> item left</span> -->
+        <div *ngIf="tasksByFilter().length > 0; else noItems">
+          <ng-container *ngIf="tasksByFilter().length === 1;else multipleItems">
+            <!--<span class="todo-count"><strong>{{ tasks().length }}</strong> item </span>-->
+            <span class="todo-count"><strong>{{ tasksByFilter().length }}</strong> item </span>
+          </ng-container>
+        </div>
+        <!-- 1 Item -->
+        <ng-template #multipleItems>
+          <span class="todo-count"><strong>{{ tasksByFilter().length }}</strong> items</span>
+        </ng-template>
+        <!-- 0 item -->
+        <ng-template #noItems>
+          <span class="todo-count"><strong>No existen ningun item</strong></span>
+        </ng-template>     
+        <!-- Remove this if you don't implement routing -->
+        <ul class="filters">
+          <li>
+            <a (click)="changeFilter('all')" routerLink="/" [class.selected]="filter() === 'all'">All</a>
+          </li>
+          <li>
+            <a (click)="changeFilter('pending')" routerLink="/pending" [class.selected]="filter() === 'pending'">Pending</a>
+          </li>
+          <li>
+            <a (click)="changeFilter('completed')" routerLink="/completed" [class.selected]="filter() === 'completed'">Completed</a>
+          </li>
+        </ul>
+        <!-- <h1>{{ filter() }}</h1> -->
+        <!-- Hidden if no completed items are left ↓ -->
+        <button class="clear-completed">Clear completed</button>
+      </footer>
+      
+    </div>
+  </section>
+  
