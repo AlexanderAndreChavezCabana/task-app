@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Input, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -6,18 +6,54 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-labs',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ReactiveFormsModule],
+  imports: [RouterOutlet, ReactiveFormsModule],
   templateUrl: './labs.component.html',
   styleUrl: './labs.component.css'
 })
 export class LabsComponent {
   welcome = 'todoapp';
 
+  objetosVacio = signal([]); 
+
+  objetoSignal = signal({
+    id: 0,
+    nombre: 'radio',
+    tipo: 'A',
+    costo: 200
+  }); 
+
+  objetos = signal([
+    {
+      id: 0,
+      nombre: 'Radio',
+      tipo: 'Clase A',
+      costo: 1300  
+    },
+    {
+      id: 1,
+      nombre: 'Televisión',
+      tipo: 'Clase B',
+      costo: 300
+    },
+    {
+      id: 2,
+      nombre: 'Play Station',
+      tipo: 'Clase C',
+      costo: 450
+    }
+
+
+  ])
+
   tasks = [
     "Instalar el angular CLI",
     "Construir proyecto",
     "Construir "
   ]
+
+  nameIf = signal('Alexander');
+  ageIf = signal(20);
+
 
   name = 'Alexander';
   age = 20;
